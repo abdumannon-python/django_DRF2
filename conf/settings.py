@@ -29,8 +29,11 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK={
-    'DEFAULT_AUTHENTICATION-CLASSES':[
-        'rest_framework.authentication.TokenAuthenticatoin'
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
     ]
 }
 
@@ -103,6 +106,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL = 'test2.Users'
 
 STATIC_URL = 'static/'

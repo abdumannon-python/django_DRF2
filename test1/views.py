@@ -8,10 +8,12 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from rest_framework import status
 from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class ProductListCreateView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializers
     queryset = Product.objects.all()
 
