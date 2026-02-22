@@ -22,8 +22,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'test1',
-    'test2'
+    'test2',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
 ]
+
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION-CLASSES':[
+        'rest_framework.authentication.TokenAuthenticatoin'
+    ]
+}
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
