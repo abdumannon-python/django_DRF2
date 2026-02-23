@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import RegisterView,LoginView,LogoutView,ProfilUser
+from .views import RegisterView,LoginView,LogoutView,ProfilUser,PasswordUpdate
 
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/',LoginView.as_view(),name='login'),
     path('logout/',LogoutView.as_view(),name='logout'),
     path('profil/', ProfilUser.as_view()),
+    path('password-update/',PasswordUpdate.as_view()),
 ]

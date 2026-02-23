@@ -27,3 +27,5 @@ class RegisterSerializers(serializers.ModelSerializer):
         validated_data.pop('conf_password')
         user=Users.objects.create_user(**validated_data)
         return user
+
+

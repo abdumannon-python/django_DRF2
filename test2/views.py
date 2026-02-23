@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from rest_framework.decorators import permission_classes
+
 from .serializers import UserSerializers,RegisterSerializers
 from rest_framework.response import Response
 from rest_framework import status
@@ -57,9 +59,28 @@ class ProfilUser(RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+class PasswordUpdate(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self,request):
+        user=request.user
+        old_password=self.request.data.get('old_password')
+        password=self.request.data.get('password')
+        conf_password=self.request.data.get('conf_password')
+
+        if not user.check_password(old_password):
+            return Response({"error": "Eski parol noto'g'ri "},status=status.HTTP_400_BAD_REQUEST)
+        if password!=conf_password:
+            return Response({"error":"Yangi parollar bir-biriga mos emas"},status=status.HTTP_400_BAD_REQUEST)
 
 
+        token, _=Token.objects.get_or_create(user=user)
 
 
-
-
+        user.set_password(password)
+        user.save()
+        response={
+            'status':status.HTTP_200_OK,
+            'message':"Malumotlariz muffaqiyatli yanilandi",
+            'data':str(token.key)
+        }
+        return Response(response)
