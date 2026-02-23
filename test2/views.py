@@ -1,13 +1,14 @@
-from .models import Users
+from django.contrib.auth import get_user_model
 from .serializers import UserSerializers,RegisterSerializers
 from rest_framework.response import Response
-from rest_framework import status,viewsets,mixins,permissions
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.authentication import authenticate
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.generics import RetrieveUpdateAPIView
+User = get_user_model()
 class RegisterView(APIView):
     def post(self,request):
         serializer=RegisterSerializers(data=request.data)
@@ -48,6 +49,13 @@ class LogoutView(APIView):
             'message':'logout qilindi '
         }
         return Response(response)
+
+class ProfilUser(RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializers
+
+    def get_object(self):
+        return self.request.user
 
 
 
